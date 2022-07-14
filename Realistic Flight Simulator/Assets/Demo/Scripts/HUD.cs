@@ -8,10 +8,12 @@ public class HUD : MonoBehaviour
     [SerializeField] private Text throttleText = null;
     [SerializeField] private Text speedText = null;
     [SerializeField] private Text brakeText = null;
+    [SerializeField] private Text pilotText = null;
     [SerializeField] private Engine planeEngine = null;
     [SerializeField] private Wing brake = null;    
     [SerializeField] private Image crosshair = null;
     [SerializeField] private Image velocityIndicator = null;
+    [SerializeField] private AircraftController controller = null;
 
     private void Update()
     {
@@ -19,12 +21,14 @@ public class HUD : MonoBehaviour
         {
             string throttle = (planeEngine.Throttle * 100).ToString("0");
             string velocity = planeEngine.Rigidbody.velocity.magnitude.ToString("0.0");
+            string pilot = controller.autoPilotActivated ? "ON" : "OFF";
 
             bool brakeOn = brake.BrakeInput == 1f;
 
             brakeText.text = brakeOn ? "BRK: ON" : "BRK: OFF";
             throttleText.text = $"THR: {throttle}%";
             speedText.text = $"SPD: {velocity}m/s";
+            pilotText.text = $"PLT: {pilot}";
 
             if (crosshair != null)
             {
