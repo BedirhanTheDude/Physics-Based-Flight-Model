@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Surface : MonoBehaviour
+// Rotates the control surface with user input
+public class Controller : MonoBehaviour
 {
 
     [Header("Angles")]
@@ -19,11 +20,11 @@ public class Surface : MonoBehaviour
     private float targetAngle = 0f;
     private float angle = 0f;
 
-    private Quaternion startRotation;
+    private Quaternion startingRot;
 
     private void Awake()
     {
-        startRotation = transform.localRotation;
+        startingRot = transform.localRotation;
     }
 
     private void FixedUpdate()
@@ -31,8 +32,7 @@ public class Surface : MonoBehaviour
         targetAngle = (targetAngleInput > 0) ? targetAngleInput * maxAngle : targetAngleInput * minAngle;
         angle = Mathf.MoveTowards(angle, targetAngle, speed * Time.fixedDeltaTime);
 
-        transform.localRotation = startRotation;
+        transform.localRotation = startingRot;
         transform.Rotate(Vector3.right, angle, Space.Self);
     }
-
 }

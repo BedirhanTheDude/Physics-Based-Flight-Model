@@ -10,7 +10,7 @@ public class HUD : MonoBehaviour
     [SerializeField] private Text brakeText = null;
     [SerializeField] private Text pilotText = null;
     [SerializeField] private Engine planeEngine = null;
-    [SerializeField] private Wing brake = null;    
+    [SerializeField] private Part brake = null;    
     [SerializeField] private Image crosshair = null;
     [SerializeField] private Image velocityIndicator = null;
     [SerializeField] private AircraftController controller = null;

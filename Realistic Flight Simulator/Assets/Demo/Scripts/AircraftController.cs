@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//This is the class that takes care of controlling the aircraft's brakes, control surfaces, the engine and the autopilot
 public class AircraftController : MonoBehaviour
-{
-
+{ 
     [Header("Components")]
 
-    [SerializeField] private Surface rightAirleon = null;
-    [SerializeField] private Surface leftAirleon = null;
-    [SerializeField] private Surface elevon = null;
-    [SerializeField] private Surface rudder = null;
-    [SerializeField] private Wing brake1 = null;
-    [SerializeField] private Wing brake2 = null;
+    [SerializeField] private Controller rightAirleon = null;
+    [SerializeField] private Controller leftAirleon = null;
+    [SerializeField] private Controller elevon = null;
+    [SerializeField] private Controller rudder = null;
+    [SerializeField] private Part brake1 = null;
+    [SerializeField] private Part brake2 = null;
     [Space]
     [SerializeField] private Engine engine = default;
 
@@ -21,24 +21,25 @@ public class AircraftController : MonoBehaviour
     [SerializeField] private KeyCode ActivateAutoPilot = KeyCode.P;
     private float autoPilotInput = 0f;
 
-
     private bool _pilotEnabled = false;
     public bool autoPilotActivated = false;
     private float angle;
 
     private void Update()
     {
+        // If the key is pressed the autopilot will be enabled/disabled
         if (Input.GetKeyDown(ActivateAutoPilot))
             autoPilotActivated = !autoPilotActivated;
     }
 
     private void FixedUpdate()
     {
+        // Rotating the world x axis vector relative to our aircraft rotation so that it keeps lined up with our local x axis
         Vector3 aircraftRotationEuler = transform.rotation.eulerAngles;
-        aircraftRotationEuler.x = 0f;
-        aircraftRotationEuler.z = 0f;
+        aircraftRotationEuler.x = aircraftRotationEuler.z = 0f;
         Quaternion aircraftRotation = Quaternion.Euler(aircraftRotationEuler);
 
+        // Calculating the angle between the rotated world x axis and our local x axis
         angle = Vector3.SignedAngle(aircraftRotation * Vector3.right, transform.right, transform.forward);
 
         try { Input.GetAxis("Yaw"); } catch { return; }
@@ -67,7 +68,7 @@ public class AircraftController : MonoBehaviour
             leftAirleon.targetAngleInput = -Input.GetAxis("Horizontal");
 
         CheckAutoPilot();
-        if (_pilotEnabled && autoPilotActivated)
+        if (_pilotEnabled)
         {
             autoPilotInput = RunAutoPilot();
 
@@ -84,6 +85,7 @@ public class AircraftController : MonoBehaviour
         // Returns input for auto pilot
         float autoPilotInput = 0f;
 
+        // Calculating how hard the autopilot should pull in order to level the aircraft with the local x axis
         if (Mathf.Sign(angle) >= 0)
             autoPilotInput = Mathf.InverseLerp(0, 180, angle);
         else
@@ -94,9 +96,10 @@ public class AircraftController : MonoBehaviour
 
     private void CheckAutoPilot()
     {
-        // Autopilot logic
-
-        if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && (angle >= 10f || angle <= -10f))
+     /* Checking if any of the WASD keys are pressed, if the angle is not
+        negligible enough for the autopilot to ignore and also if the user has enabled the autopilot
+        If all conditions are met the autopilot is allowed to take control */
+        if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0 && (angle >= 10f || angle <= -10f) && autoPilotActivated)
             _pilotEnabled = true;
         else
             _pilotEnabled = false;
