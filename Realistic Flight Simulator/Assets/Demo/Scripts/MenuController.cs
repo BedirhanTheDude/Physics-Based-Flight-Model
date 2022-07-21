@@ -23,6 +23,7 @@ public class MenuController : MonoBehaviour
     [Header("Plane")]
 
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private AircraftController controller;
 
     private bool animationRun = false;
 
@@ -31,6 +32,7 @@ public class MenuController : MonoBehaviour
         startMenu.SetActive(false);
         HUD.SetActive(true);
         animationRun = true;
+        controller.enabled = true;
     }
 
     public void ResumeButton()

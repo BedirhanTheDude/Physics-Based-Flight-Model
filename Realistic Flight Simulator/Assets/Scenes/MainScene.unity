@@ -2078,6 +2078,7 @@ MonoBehaviour:
   animationSpeed: 20
   animationRotationSpeed: 140
   rb: {fileID: 759505910}
+  controller: {fileID: 6311303994381289119}
 --- !u!1 &1246613665
 GameObject:
   m_ObjectHideFlags: 0
@@ -3196,6 +3197,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6311303993148882462, guid: 70711f411c042e640acf646821dd20bd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6311303993148882657, guid: 70711f411c042e640acf646821dd20bd, type: 3}
       propertyPath: m_Name
       value: Plane
@@ -3224,7 +3229,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 6311303994381289118}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 781686a913dd5a94abadd2f0c14ce8a6, type: 3}
   m_Name: 
