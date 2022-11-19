@@ -5,7 +5,7 @@ using UnityEngine;
 // The class where all physics calculations take place and where all the forces are applied onto the aircraft
 public class Part : MonoBehaviour
 {
-    private const float brakeDragMult = 100000f;
+    private const float BRAKE_DRAG_MULT = 200000f;
 
     [Header("Wing Properties")]
 
@@ -18,13 +18,16 @@ public class Part : MonoBehaviour
     [SerializeField] private bool centralizedForce = false;
     [SerializeField] private float liftMultiplier = 1f;
     [SerializeField] private float dragMultiplier = 1f;
+    private float inducedDragMult = 2f;
 
     [SerializeField] private Rigidbody rb;
 
-    [SerializeField] public float Cd = 1f;
-    [SerializeField] public float Cl = 1f;
-    [SerializeField] private Vector3 liftForce;
-    [SerializeField] public Vector3 dragForce;
+    private float Cd = 1f;
+    private float Cl = 1f;
+    private float Ci = 1f;
+    private Vector3 liftForce;
+    private Vector3 dragForce;
+    private Vector3 inducedDrag;
 
     private float _brakeInput = 1f;
 
@@ -72,22 +75,27 @@ public class Part : MonoBehaviour
         float aoa = Vector3.Angle(Vector3.forward, velocity);
 
         if (!isBrake)
-        {            
+        {
+            Vector3 liftVelocity = Vector3.ProjectOnPlane(velocity, Vector3.right);
             Cl = wingCurve.GetLiftCoefficient(aoa);
             Cd = wingCurve.GetDragCoefficient(aoa);
-            Cl *= -Mathf.Sign(velocity.y); // Because the Vector3.Angle method always returns a positive float
+            Cl *= -Mathf.Sign(velocity.y);
+            // Because the Vector3.Angle method always returns a positive float
             // we will need to multiply the lift coefficient with the sign of the velocity's y component and this results
             // in the lift coefficient flipping to the other side of the lift curve
+
+            Ci = Cl * Cl * inducedDragMult;
 
             // The aerodynamic forces are calculated with the equations shown in these NASA articles
             // https://www.grc.nasa.gov/www/k-12/airplane/drageq.html
             // https://www.grc.nasa.gov/www/k-12/airplane/lifteq.html
             liftDirection = Vector3.Cross(rb.velocity, transform.right).normalized;
-            liftForce = velocity.sqrMagnitude * Cl * wingArea * liftMultiplier * liftDirection;
+            liftForce = liftVelocity.sqrMagnitude * Cl * wingArea * liftMultiplier * liftDirection;
+            inducedDrag = liftVelocity.sqrMagnitude * Cl * Cl * inducedDragMult * -rb.velocity.normalized;
+            liftForce += inducedDrag;
             dragForce = velocity.sqrMagnitude * Cd * wingArea * dragMultiplier * -rb.velocity.normalized;
 
-            // Max lift force to prevent the aircraft from spinning out of control, unrealistic but gets the job done
-            liftForce = Vector3.ClampMagnitude(liftForce, 200000); 
+            
 
             // Forces are being applied at relevant wing positions
             rb.AddForceAtPosition(liftForce, forceApplyPos, ForceMode.Force);
@@ -99,15 +107,11 @@ public class Part : MonoBehaviour
             // These brakes don't generate lift
             float velocityLerpFactor = Mathf.InverseLerp(0, 200, rb.velocity.magnitude);
             if (rb.velocity.magnitude >= 60 || Mathf.Sign(transform.position.y) >= 0)
-                dragForce = -rb.velocity.normalized * brakeDragMult * BrakeInput * velocityLerpFactor;
+                dragForce = -rb.velocity.normalized * BRAKE_DRAG_MULT * BrakeInput * velocityLerpFactor;
             else
-                dragForce = -rb.velocity.normalized * brakeDragMult * BrakeInput;
+                dragForce = -rb.velocity.normalized * BRAKE_DRAG_MULT * BrakeInput;
             rb.AddForceAtPosition(dragForce, forceApplyPos, ForceMode.Force);
-        }
-
-
-
-        
+        }        
     }
 
     // For editor purposes

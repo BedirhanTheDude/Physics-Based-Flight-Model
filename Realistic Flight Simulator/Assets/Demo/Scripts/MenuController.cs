@@ -32,7 +32,6 @@ public class MenuController : MonoBehaviour
         startMenu.SetActive(false);
         HUD.SetActive(true);
         animationRun = true;
-        controller.enabled = true;
     }
 
     public void ResumeButton()
@@ -57,20 +56,18 @@ public class MenuController : MonoBehaviour
     {
         if (animationRun)
         {
-            menuCamTransform.position = Vector3.MoveTowards(menuCamTransform.position,
-                                       mainCamTransform.position, animationSpeed * Time.fixedDeltaTime);
-            Vector3 menuCamRotationVector = menuCamTransform.rotation.eulerAngles;
-            Vector3 mainCamRotationVector = mainCamTransform.rotation.eulerAngles;
+            menuCamTransform.position = Maths.DampV(menuCamTransform.position, mainCamTransform.position,
+                                                        3f, Time.deltaTime);
 
-            menuCamRotationVector = Vector3.MoveTowards(menuCamRotationVector, mainCamRotationVector, 
-                                                        animationRotationSpeed * Time.fixedDeltaTime);
-            menuCamTransform.rotation = Quaternion.Euler(menuCamRotationVector);
+            menuCamTransform.rotation = Maths.DampQ(menuCamTransform.rotation, mainCamTransform.rotation,
+                                                        3f, Time.deltaTime);
 
             if (menuCamTransform.rotation == mainCamTransform.rotation && menuCamTransform.position == menuCamTransform.position)
             {
                 animationRun = false;
                 menuCamTransform.gameObject.SetActive(false);
                 mainCamTransform.gameObject.SetActive(true);
+                controller.enabled = true;
                 rb.useGravity = true;
             }
         }        
@@ -78,7 +75,6 @@ public class MenuController : MonoBehaviour
 
     private void Update()
     {
-
         if (Input.GetKey(KeyCode.Escape))
         {
             if (startMenu.activeInHierarchy) return;

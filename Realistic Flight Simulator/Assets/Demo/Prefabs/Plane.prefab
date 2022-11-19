@@ -266,10 +266,6 @@ MonoBehaviour:
   liftMultiplier: 1
   dragMultiplier: 1
   rb: {fileID: 6311303993148882460}
-  Cd: 1
-  Cl: 1
-  liftForce: {x: 0, y: 0, z: 0}
-  dragForce: {x: 0, y: 0, z: 0}
 --- !u!1 &6311303993135963576
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,7 +501,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6311303993148882657}
   serializedVersion: 2
-  m_Mass: 32000
+  m_Mass: 24000
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
@@ -526,7 +522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thrustSpeed: 1
-  enginePower: 640000
+  enginePower: 860000
 --- !u!114 &6311303993148882462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,6 +542,8 @@ MonoBehaviour:
   brake1: {fileID: 6311303993075966866}
   brake2: {fileID: 6311303993683024401}
   engine: {fileID: 6311303993148882463}
+  ActivateAutoPilot: 112
+  autoPilotActivated: 0
 --- !u!1 &6311303993208045739
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,10 +713,6 @@ MonoBehaviour:
   liftMultiplier: 1
   dragMultiplier: 1
   rb: {fileID: 6311303993148882460}
-  Cd: 1
-  Cl: 1
-  liftForce: {x: 0, y: 0, z: 0}
-  dragForce: {x: 0, y: 0, z: 0}
 --- !u!1 &6311303993645018109
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,10 +812,6 @@ MonoBehaviour:
   liftMultiplier: 1
   dragMultiplier: 1
   rb: {fileID: 6311303993148882460}
-  Cd: 1
-  Cl: 1
-  liftForce: {x: 0, y: 0, z: 0}
-  dragForce: {x: 0, y: 0, z: 0}
 --- !u!1 &6311303993762515755
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,10 +880,6 @@ MonoBehaviour:
   liftMultiplier: 1
   dragMultiplier: 1
   rb: {fileID: 6311303993148882460}
-  Cd: 1
-  Cl: 1
-  liftForce: {x: 0, y: 0, z: 0}
-  dragForce: {x: 0, y: 0, z: 0}
 --- !u!1 &6311303993763469271
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,10 +1108,6 @@ MonoBehaviour:
   liftMultiplier: 1
   dragMultiplier: 1
   rb: {fileID: 6311303993148882460}
-  Cd: 1
-  Cl: 1
-  liftForce: {x: 0, y: 0, z: 0}
-  dragForce: {x: 0, y: 0, z: 0}
 --- !u!1 &6311303994138811106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1176,10 +1158,6 @@ MonoBehaviour:
   liftMultiplier: 1
   dragMultiplier: 1
   rb: {fileID: 6311303993148882460}
-  Cd: 1
-  Cl: 1
-  liftForce: {x: 0, y: 0, z: 0}
-  dragForce: {x: 0, y: 0, z: 0}
 --- !u!1 &6311303994183825852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1364,10 +1342,6 @@ MonoBehaviour:
   liftMultiplier: 1
   dragMultiplier: 1
   rb: {fileID: 6311303993148882460}
-  Cd: 1
-  Cl: 1
-  liftForce: {x: 0, y: 0, z: 0}
-  dragForce: {x: 0, y: 0, z: 0}
 --- !u!1 &6311303994464378326
 GameObject:
   m_ObjectHideFlags: 0
@@ -1436,10 +1410,6 @@ MonoBehaviour:
   liftMultiplier: 1
   dragMultiplier: 1
   rb: {fileID: 6311303993148882460}
-  Cd: 1
-  Cl: 1
-  liftForce: {x: 0, y: 0, z: 0}
-  dragForce: {x: 0, y: 0, z: 0}
 --- !u!1 &6311303994704074520
 GameObject:
   m_ObjectHideFlags: 0
@@ -1585,10 +1555,6 @@ MonoBehaviour:
   liftMultiplier: 1
   dragMultiplier: 1
   rb: {fileID: 6311303993148882460}
-  Cd: 1
-  Cl: 1
-  liftForce: {x: 0, y: 0, z: 0}
-  dragForce: {x: 0, y: 0, z: 0}
 --- !u!1 &6311303994793163594
 GameObject:
   m_ObjectHideFlags: 0

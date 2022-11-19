@@ -15,7 +15,7 @@ public class Engine : MonoBehaviour
     [SerializeField] private float brakePower = 1f;*/
 
     private float brakeInput = 0f;
-
+    
     private float _throttle = 0f;
     private float _targetThrottle = 0f;
 
@@ -45,7 +45,7 @@ public class Engine : MonoBehaviour
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = gameObject.GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
@@ -56,15 +56,9 @@ public class Engine : MonoBehaviour
         }
         thrustVector = Vector3.forward * Throttle * enginePower;
 
-        //Vector3 brakeVector = -rb.velocity.normalized * brakePower * brakeInput;
-
-        
-        
         if (rb != null)
         {
             rb.AddRelativeForce(thrustVector, ForceMode.Force);
-            //rb.AddRelativeForce(brakeVector, ForceMode.Force);
         }
     }
-
 }
